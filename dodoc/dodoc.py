@@ -1,6 +1,11 @@
 import re
 from mkdocs.plugins import BasePlugin
 
+def create_doc_markdown(match):
+    item = match.group(1)
+    
+    return "this item -> " + item + " <- is AMAZING!"
+
 class DoDoc(BasePlugin):
 	
     def on_page_markdown(self, markdown, **kwargs):
@@ -15,9 +20,9 @@ class DoDoc(BasePlugin):
         # For sake of simplicity, we won't use regular
         # expressions in this example to search and replace text.
         
+        markdown = re.sub('\{\{dodoc\}\}\(([\w\.]+)\)', lambda x: create_doc_markdown(x), markdown)
         
-        
-        markdown = markdown.replace("\[autodoc\]", "CODE DOCUMENTATIONS")
+        #markdown = markdown.replace("[dodoc]", "CODE DOCUMENTATIONS \n <h1>HELL YEAH!</h1>")
 
         # However if you prefer to use regex, please comment the
         # previous line of code and uncomment the following ones:
